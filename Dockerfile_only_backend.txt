@@ -1,0 +1,22 @@
+# Use official Python image as base
+FROM python:3.9
+
+# Set working directory
+WORKDIR /app
+
+# Copy only requirements.txt first (to leverage Docker layer caching)
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application files
+COPY . .
+
+# Install procps for pgrep support
+RUN apt-get update && apt-get install -y procps
+
+# Expose ports
+EXPOSE 8000 8001 8002 8003
+
+CMD ["bash"]

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+requests
+numpy
+psutil
+pydantic
+gunicorn
+aiohttp
+httpx
+

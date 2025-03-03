@@ -1,0 +1,6 @@
+Starting FastAPI app3 on port 8002...
+INFO:     Started server process [9]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8002 (Press CTRL+C to quit)
+FastAPI app3 is running on port 8002

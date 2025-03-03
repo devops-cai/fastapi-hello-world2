@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  fastapi_app1:
+    build: .
+    ports:
+      - "4021:8000"
+    command: /app/scripts/start_app1.sh
+    volumes:
+      - .:/app
+    environment:
+      - APP_NAME=app1
+
+  fastapi_app2:
+    build: .
+    ports:
+      - "4026:8001"
+    command: /app/scripts/start_app2.sh
+    volumes:
+      - .:/app
+    environment:
+      - APP_NAME=app2
+
+  fastapi_app3:
+    build: .
+    ports:
+      - "4027:8002"
+    command: /app/scripts/start_app3.sh
+    volumes:
+      - .:/app
+    environment:
+      - APP_NAME=app3
+
+  fastapi_app4:
+    build: .
+    ports:
+      - "4028:8003"
+    command: /app/scripts/start_app4.sh
+    volumes:
+      - .:/app
+    environment:
+      - APP_NAME=app4
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend_base
+    ports:
+      - "5000:5000"
+    depends_on:
+      - fastapi_app1
+      - fastapi_app2
+      - fastapi_app3
+      - fastapi_app4
+    volumes:
+      - ./backend:/backend
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend_base
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/frontend
+    environment:
+      - REACT_APP_API_URL=http://backend:5000
