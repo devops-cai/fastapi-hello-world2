@@ -1,5 +1,7 @@
 # fastapi-hello-world2
 
+Please use this documentation with new-branch
+
 This is a simple MERN application - MongoDB, Express.js, React, and Node.js (Currently ERN only may be as we are not using MongoDB)
 
 Which utilizes python in backend whith dependecies as mentioned in requirement.txt
@@ -11,6 +13,11 @@ Note :
 
 Manuaual flow of Code
 
-Step 1 - Run .sh scripts and check if all the ports are active 
+Step 1 - Run .sh scripts and check if all the ports are active (localhost:8000,..............)
 
-Step 2 - R
+Step 2 - Have to cd backend directory --> conda init --> npm run dev
+
+Step 3 - Have to cd frontend directory --> conda init --> npm run start / npm start
+
+Step 4 - Have to check working of frontend (localhost:3000) and backend (localhost:8080) 
+
