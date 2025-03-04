@@ -8,7 +8,7 @@ def read_root():
 
 @app.get("/api/message1")
 def get_message():
-    return {"message": "Hello from FastAPI - app1"}
+    return {"message1": "Message from app1.py"}
 
 if __name__ == "__main__":
     import uvicorn

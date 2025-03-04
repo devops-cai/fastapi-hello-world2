@@ -1,28 +1,61 @@
-const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:8000","http://localhost:8001"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 
-const apis = [
-  { name: "API 1", url: "http://fastapi_app1:8000/" },
-  { name: "API 2", url: "http://fastapi_app2:8001/" },
-  { name: "API 3", url: "http://fastapi_app3:8002/" },
-  { name: "API 4", url: "http://fastapi_app4:8003/" }
-];
+app.use(express.json());
 
-app.get('/fetch-messages', async (req, res) => {
-  try {
-    const responses = await Promise.all(apis.map(api => axios.get(api.url).then(resp => ({ name: api.name, message: resp.data.message }))));
-    res.json(responses);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch data from FastAPI services" });
-  }
+app.get("/", (req, res) => {
+  res.json("Server running on port 8080");
 });
 
+// ✅ Improved Error Logging
+app.get("/api/server1", async (req, res) => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8000/api/message1");
+        res.json({ message: response.data.message1 });
+    } catch (error) {
+        console.error("Error fetching from FastAPI:", error.message);
+        res.status(500).json({ error: "Failed to fetch from FastAPI Server 1" });
+    }
+});
+
+app.get("/api/server2", async (req, res) => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8001/api/message2");
+        res.json({ message: response.data.message1 });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch from FastAPI Server 2" });
+    }
+});
+
+app.get("/api/server3", async (req, res) => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8002/");
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch from FastAPI Server 3" });
+    }
+});
+
+app.get("/api/server4", async (req, res) => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8003/");
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch from FastAPI Server 4" });
+    }
+});
+
+const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+    console.log(`Node.js server running on ${PORT}`);
 });
